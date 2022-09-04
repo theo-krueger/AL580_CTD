@@ -4,7 +4,7 @@
 ## Also requires "angle2dec.R" in the same folder
 ##################################
 ## Author: Theo Krueger
-## Last update: 31.08.2022
+## Last update: 04.09.2022
 ##################################
 
 
@@ -78,5 +78,6 @@ for (file in in_files){
   write.csv(df_useful, 
             file = paste0(output_folder, "/", out_files[n]), row.names = FALSE)
 
+  print(paste("Finished. File saved as: ", out_files[n]))
 }
 }
