@@ -29,9 +29,6 @@ out_files <- gsub(".TOB", ".csv", in_files)
 
 print(paste0("Files will be saved in: ", output_folder))
 
-in_files <- list.files(input_folder)
-out_files <- gsub(".TOB", ".csv", in_files)
-
 col_names_df <- c("ID","Pressure..db","Temp..degC","Leitf..mS.cm","RawO2..mV",
                   "Boden","SALIN..ppt","SIGMA..kg.m3","AO2_%..%","AO2mg..mg.l",
                   "Licor..pffr","date","time","Lat..Deg.N","Long..Deg.E","BsFlo",
@@ -45,7 +42,6 @@ colnames(master) <- col_names_master
 
 n <- 0
 
-n <- 0
 for (file in in_files){
   # keep count
   n = n+1
