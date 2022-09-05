@@ -17,7 +17,7 @@ source("angle2dec.R")
 # set to folder with TOB files
 input_folder <- ""
 # set to output folder or leave at default to save files in original folder
-# be careful as default only works in ONLY TOB files are in folder
+# be careful as default only works if ONLY TOB files are in folder
 output_folder <- input_folder
 
 #####################################################
@@ -27,21 +27,35 @@ output_folder <- input_folder
 in_files <- list.files(input_folder)
 out_files <- gsub(".TOB", ".csv", in_files)
 
+print(paste0("Files will be saved in: ", output_folder))
+
+in_files <- list.files(input_folder)
+out_files <- gsub(".TOB", ".csv", in_files)
+
+col_names_df <- c("ID","Pressure..db","Temp..degC","Leitf..mS.cm","RawO2..mV",
+                  "Boden","SALIN..ppt","SIGMA..kg.m3","AO2_%..%","AO2mg..mg.l",
+                  "Licor..pffr","date","time","Lat..Deg.N","Long..Deg.E","BsFlo",
+                  "AO2ml..ml.l")
+col_names_master <- c("ID", "Pressure..db", "Temp..degC", "SALIN..ppt", 
+                      "Day", "Month", "Year", "time", "Lat..Deg.N", 
+                      "Long..Deg.E", "O2ml..ml.l")
+
+master <- data.frame(matrix(ncol = 17, nrow = 0))
+colnames(master) <- col_names_master
+
+n <- 0
 
 n <- 0
 for (file in in_files){
   # keep count
   n = n+1
-  print(paste("Processing: ", in_files[n]))
+  print(paste0("Processing: ", in_files[n]))
    
   # read table
   df <- read.table(paste0(input_folder, "/", file), skip =  51)
   
   # give meaningful column names
-  names(df) <- c("ID","Pressure..db","Temp..degC","Leitf..mS.cm","RawO2..mV",
-                 "Boden","SALIN..ppt","SIGMA..kg.m3","AO2_%..%","AO2mg..mg.l",
-                 "Licor..pffr","date","time","Lat..Deg.N","Long..Deg.E","BsFlo",
-                 "AO2ml..ml.l")
+  names(df) <- col_names_df
   
   # reformatting date
   df <- df %>% separate(date, c("Day", "Month", "Year"))
@@ -78,6 +92,9 @@ for (file in in_files){
   write.csv(df_useful, 
             file = paste0(output_folder, "/", out_files[n]), row.names = FALSE)
 
-  print(paste("Finished. File saved as: ", out_files[n]))
-}
+  print(paste0("Finished. File saved as :", out_files[n]))
+  }
+  write.csv(master,
+            file = paste0(output_folder, "/master.csv"), row.names = FALSE)
+  print(paste("Done. Master file saved as: master.csv"))
 }
