@@ -7,7 +7,7 @@
 ## Last update: 04.09.2022
 ##################################
 
-
+# dependencies
 
 library(tidyverse)
 source("angle2dec.R")
@@ -35,7 +35,7 @@ col_names_df <- c("ID","Pressure..db","Temp..degC","Leitf..mS.cm","RawO2..mV",
                   "AO2ml..ml.l")
 col_names_master <- c("ID", "Pressure..db", "Temp..degC", "SALIN..ppt", 
                       "Day", "Month", "Year", "time", "Lat..Deg.N", 
-                      "Long..Deg.E", "O2ml..ml.l")
+                      "Long..Deg.E", "O2..ml.l")
 
 master <- data.frame(matrix(ncol = 17, nrow = 0))
 colnames(master) <- col_names_master
