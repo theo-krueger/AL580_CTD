@@ -1,6 +1,6 @@
-ALKOR CTD data transformation
+# ALKOR CTD data transformation
 
-## Author: Theo Krueger
+Author: Theo Krueger
 
 The script attempts to reformat CTD data to a file usable in ODV. It creates a file for each input as well as a master sheet combining them. 
 
