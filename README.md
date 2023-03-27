@@ -10,7 +10,6 @@ Please remember to download both
   CTD_extraction.R and angle2dec.R
 for the script to work.
 
-Script worked for the CTD data of 30.08.22.
 PLEASE CHECK your output for any errors and compare it to the original .TOB file.
 Feel free to change the script on your local host.
 Suggestions or tips for improvement are always welcome.
