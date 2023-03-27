@@ -4,7 +4,7 @@ Author: Theo Krueger
 
 The script attempts to reformat CTD data to a file usable in ODV. It creates a file for each input as well as a master sheet combining them. 
 
-It works EXCLUSIVELY for the CTD data format used on the research vessel ALKOR in northern latitudes and eastern longitudes. 
+It works EXCLUSIVELY for the CTD data format used on the research vessel ALKOR.
 
 Please remember to download both 
   CTD_extraction.R and angle2dec.R
