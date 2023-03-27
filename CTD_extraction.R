@@ -30,11 +30,11 @@ output_folder <- input_folder
   #prepare column names
   col_names_df <- c("ID","Pressure..db","Temp..degC","Leitf..mS.cm","RawO2..mV",
                     "Boden","SALIN..ppt","SIGMA..kg.m3","AO2_%..%","AO2mg..mg.l",
-                    "Licor..pffr","date","time","Lat..Deg.N","Long..Deg.E","BsFlo",
+                    "Licor..pffr","date","time","Lat..Deg","Long..Deg","BsFlo",
                     "AO2ml..ml.l")
   col_names_master <- c("ID", "Pressure..db", "Temp..degC", "SALIN..ppt", 
-                        "Day", "Month", "Year", "time", "Lat..Deg.N", 
-                        "Long..Deg.E", "O2ml..ml.l")
+                        "Day", "Month", "Year", "time", "Lat..Deg", 
+                        "Long..Deg", "O2ml..ml.l")
   
   #prepare master sheet
   master <- data.frame(matrix(ncol = 17, nrow = 0))
@@ -57,29 +57,46 @@ output_folder <- input_folder
     df <- df %>% separate(date, c("Day", "Month", "Year"))
     
     # reformatting lat and lon to dec
-    long <- df$Long..Deg.E
+    long <- df$Long..Deg
     long_new <- c()
     for (long_sub in long){
+      switch_EW <- FALSE
+      if (grepl("W", long_sub, fixed = TRUE)){
+        switch_EW = TRUE
+      }
       new_long_sub <- strtrim(long_sub, nchar(long_sub)-1)
       new_long_sub <- new_long_sub %>% 
         str_replace("(.{2})", "\\1 ") %>% 
         str_trim()
+      if (switch_EW){
+        new_long_sub <- paste0("-", new_long_sub)
+      }
+      
       long_new <- append(long_new, new_long_sub)
     }
-    df$Long..Deg.E <- long_new
-    df$Long..Deg.E <- angle2dec(df$Long..Deg.E)
+    df$Long..Deg <- long_new
+    df$Long..Deg <- angle2dec(df$Long..Deg)
     
-    lat <- df$Lat..Deg.N
+    lat <- df$Lat..Deg
     lat_new <- c()
     for (lat_sub in lat){
+      switch_NS <- FALSE
+      if (grepl("S", lat_sub, fixed = TRUE)){
+        switch_NS <- TRUE
+      }
+      
       new_lat_sub <- strtrim(lat_sub, nchar(lat_sub)-1)
       new_lat_sub <- new_lat_sub %>% 
         str_replace("(.{2})", "\\1 ") %>% 
         str_trim()
+      if (switch_NS){
+        new_lat_sub <- paste0("-", new_lat_sub)
+      }
+      
       lat_new <- append(lat_new, new_lat_sub)
     }
-    df$Lat..Deg.N <- lat_new
-    df$Lat..Deg.N <- angle2dec(df$Lat..Deg.N)
+    df$Lat..Deg <- lat_new
+    df$Lat..Deg <- angle2dec(df$Lat..Deg)
     
     # subset data to only include useful columns
     df_useful <- subset(df, select = c(1:3, 7, 12:17,19))
