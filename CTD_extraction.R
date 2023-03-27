@@ -24,7 +24,16 @@ output_folder <- input_folder
 
 { # RUN HERE to run the whole script
   
-  in_files <- list.files(input_folder)
+  if (file.exists(input_folder)){
+    in_files <- list.files(input_folder)
+    print("Files found")
+  } else {
+    print("Input folder does not exist. Check pathname.")
+  }
+  if (!file.exists(output_folder)){
+    print("Output folder does not exist. Check pathname.")
+  }
+  
   out_files <- gsub(".TOB", ".csv", in_files)
   
   #prepare column names
